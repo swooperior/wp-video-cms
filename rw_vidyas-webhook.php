@@ -61,7 +61,7 @@ function handle_vidya_payment(){
             $rw_vidya = $paymentIntent['metadata']['rw_vidya'];
             $s_payment_intent = $paymentIntent['id'];
             
-            //Assign video to user
+            //Remove video from user
             $user = new WP_User($customer);
             $user->remove_cap($rw_vidya,true);
 
