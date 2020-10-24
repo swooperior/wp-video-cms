@@ -16,7 +16,7 @@ if(isset($_POST['video_uri'])){
     $file_name = $_POST['video_uri'];
     $uri = $client->upload($file_name, array(
         "name" => $file_name,
-        "description" => "Video uploaded from rw_vidyas."
+        "description" => "Video uploaded from rm_videos."
     ));
 
     $response = $client->request($uri . '?fields=transcode.status');

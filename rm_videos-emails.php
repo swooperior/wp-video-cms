@@ -1,10 +1,10 @@
 <?php
-//rw_vidya emails
+//rm_video emails
 
-function rw_vidya_receipt_email($customer,$video){
+function rm_video_receipt_email($customer,$video){
     $customer = get_userdata($customer);
     $name = $customer->first_name;
-    $vidID = str_replace('rw_vidya_','',$video);
+    $vidID = str_replace('rm_video_','',$video);
     $vidTitle = get_the_title($vidID);
     $vidPrice = get_post_meta($vidID,'price_meta',true);
 
@@ -21,10 +21,10 @@ function rw_vidya_receipt_email($customer,$video){
     return $email;
 }
 
-function rw_vidya_refund_email($customer,$video){
+function rm_video_refund_email($customer,$video){
     $customer = get_userdata($customer);
     $name = $customer->first_name;
-    $vidID = str_replace('rw_vidya_','',$video);
+    $vidID = str_replace('rm_video_','',$video);
     $vidTitle = get_the_title($vidID);
     $vidPrice = get_post_meta($vidID,'price_meta',true);
 

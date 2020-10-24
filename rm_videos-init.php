@@ -1,34 +1,34 @@
 <?php   // Register Custom Post Type
-function create_rw_vidyas() {
+function create_rm_videos() {
 
 	$labels = array(
-		'name'                  => _x( 'Videos', 'Post Type General Name', 'rw_vidyas' ),
-		'singular_name'         => _x( 'Video', 'Post Type Singular Name', 'rw_vidyas' ),
-		'menu_name'             => __( 'Videos', 'rw_vidyas' ),
-		'name_admin_bar'        => __( 'Videos', 'rw_vidyas' ),
-		'archives'              => __( 'Video Archives', 'rw_vidyas' ),
-		'attributes'            => __( 'Video Attributes', 'rw_vidyas' ),
-		'parent_item_colon'     => __( 'Parent Video:', 'rw_vidyas' ),
-		'all_items'             => __( 'All Videos', 'rw_vidyas' ),
-		'add_new_item'          => __( 'Add New Video', 'rw_vidyas' ),
-		'add_new'               => __( 'Add New', 'rw_vidyas' ),
-		'new_item'              => __( 'New Video', 'rw_vidyas' ),
-		'edit_item'             => __( 'Edit Video', 'rw_vidyas' ),
-		'update_item'           => __( 'Update Video', 'rw_vidyas' ),
-		'view_item'             => __( 'View Video', 'rw_vidyas' ),
-		'view_items'            => __( 'View Videos', 'rw_vidyas' ),
-		'search_items'          => __( 'Search Video', 'rw_vidyas' ),
-		'not_found'             => __( 'Not found', 'rw_vidyas' ),
-		'not_found_in_trash'    => __( 'Not found in Trash', 'rw_vidyas' ),
-		'featured_image'        => __( 'Featured Image', 'rw_vidyas' ),
-		'set_featured_image'    => __( 'Set featured image', 'rw_vidyas' ),
-		'remove_featured_image' => __( 'Remove featured image', 'rw_vidyas' ),
-		'use_featured_image'    => __( 'Use as featured image', 'rw_vidyas' ),
-		'insert_into_item'      => __( 'Insert into Video', 'rw_vidyas' ),
-		'uploaded_to_this_item' => __( 'Uploaded to this Video', 'rw_vidyas' ),
-		'items_list'            => __( 'Video list', 'rw_vidyas' ),
-		'items_list_navigation' => __( 'Video list navigation', 'rw_vidyas' ),
-		'filter_items_list'     => __( 'Filter Video list', 'rw_vidyas' ),
+		'name'                  => _x( 'Videos', 'Post Type General Name', 'rm_videos' ),
+		'singular_name'         => _x( 'Video', 'Post Type Singular Name', 'rm_videos' ),
+		'menu_name'             => __( 'Videos', 'rm_videos' ),
+		'name_admin_bar'        => __( 'Videos', 'rm_videos' ),
+		'archives'              => __( 'Video Archives', 'rm_videos' ),
+		'attributes'            => __( 'Video Attributes', 'rm_videos' ),
+		'parent_item_colon'     => __( 'Parent Video:', 'rm_videos' ),
+		'all_items'             => __( 'All Videos', 'rm_videos' ),
+		'add_new_item'          => __( 'Add New Video', 'rm_videos' ),
+		'add_new'               => __( 'Add New', 'rm_videos' ),
+		'new_item'              => __( 'New Video', 'rm_videos' ),
+		'edit_item'             => __( 'Edit Video', 'rm_videos' ),
+		'update_item'           => __( 'Update Video', 'rm_videos' ),
+		'view_item'             => __( 'View Video', 'rm_videos' ),
+		'view_items'            => __( 'View Videos', 'rm_videos' ),
+		'search_items'          => __( 'Search Video', 'rm_videos' ),
+		'not_found'             => __( 'Not found', 'rm_videos' ),
+		'not_found_in_trash'    => __( 'Not found in Trash', 'rm_videos' ),
+		'featured_image'        => __( 'Featured Image', 'rm_videos' ),
+		'set_featured_image'    => __( 'Set featured image', 'rm_videos' ),
+		'remove_featured_image' => __( 'Remove featured image', 'rm_videos' ),
+		'use_featured_image'    => __( 'Use as featured image', 'rm_videos' ),
+		'insert_into_item'      => __( 'Insert into Video', 'rm_videos' ),
+		'uploaded_to_this_item' => __( 'Uploaded to this Video', 'rm_videos' ),
+		'items_list'            => __( 'Video list', 'rm_videos' ),
+		'items_list_navigation' => __( 'Video list navigation', 'rm_videos' ),
+		'filter_items_list'     => __( 'Filter Video list', 'rm_videos' ),
 	);
 	$capabilities = array(
 		'edit_post'             => 'edit_video',
@@ -40,8 +40,8 @@ function create_rw_vidyas() {
 		'read_private_posts'    => 'read_private_videos',
 	);
 	$args = array(
-		'label'                 => __( 'Video', 'rw_vidyas' ),
-		'description'           => __( 'Purchasable video lessons', 'rw_vidyas' ),
+		'label'                 => __( 'Video', 'rm_videos' ),
+		'description'           => __( 'Purchasable video lessons', 'rm_videos' ),
 		'labels'                => $labels,
 		'supports'              => array( 'title','thumbnail', 'excerpt', 'comments'),
 		'taxonomies'            => array( 'category', 'post_tag' ),
@@ -60,7 +60,7 @@ function create_rw_vidyas() {
 		'capabilities'          => $capabilities,
 		'show_in_rest'          => true,
 	);
-	register_post_type( 'rw_vidyas', $args );
+	register_post_type( 'rm_videos', $args );
 
     //Add video capabilities to administrator role.
     //Change - instead create video-author role and add this role to the admin user?
@@ -69,14 +69,14 @@ function create_rw_vidyas() {
     foreach($capabilities as $cap){
         $role->add_cap( $cap, true );
 	}
-    
+    flush_rewrite_rules( false );
 }
-add_action( 'init', 'create_rw_vidyas', 0 );
+add_action( 'init', 'create_rm_videos', 0 );
 
 //Register plugin stylesheet
 function add_my_plugin_stylesheet(){
-	wp_register_style('rw_vidyas-style','/wp-content/plugins/RW-Vidya/rw_vidyas-style.css');
-	wp_enqueue_style('rw_vidyas-style');
+	wp_register_style('rm_videos-style','/wp-content/plugins/RW-Vidya/rm_videos-style.css');
+	wp_enqueue_style('rm_videos-style');
 }
 add_action("wp_print_styles","add_my_plugin_stylesheet");
 
@@ -84,10 +84,10 @@ add_action("wp_print_styles","add_my_plugin_stylesheet");
 add_action("admin_init", "init_videos");
 
 function init_videos(){
-  add_meta_box("video_details-meta", "Video Options", "rw_vidya_video_details", "rw_vidyas", "normal", "high");
+  add_meta_box("video_details-meta", "Video Options", "rm_video_video_details", "rm_videos", "normal", "high");
 }
 
-function rw_vidya_video_details(){
+function rm_video_video_details(){
   global $post;
   $custom = get_post_custom($post->ID);
   $vimeo_url = $custom["vimeo_url"][0];
@@ -96,7 +96,7 @@ function rw_vidya_video_details(){
   ?>
   
 	<table>
-		<tr><td><?php //VIMEO API REQUIRED require('rw_vidyas-vimeo.php'); ?> <tr></td>
+		<tr><td><?php //VIMEO API REQUIRED require('rm_videos-vimeo.php'); ?> <tr></td>
 		<tr><td><label>Vimeo ID: <p><i>After uploading your video to vimeo, copy the vimeo id (The string of numbers at the end of the video url) here.</i></p></label></td><td><input name="vimeo_url"  value="<?php echo $vimeo_url; ?>" /></td></tr>
 		<tr><td><label>Price (&pound;):</label></td><td><input name="price_meta" size=10  value="<?php echo $price_meta; ?>" /></td></tr>
 </table>

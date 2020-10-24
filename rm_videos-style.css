@@ -1,22 +1,22 @@
-.rw_vidyas_video{
+.rm_videos_video{
   width:100%;
   background-color:rgb(95, 95, 95);
   color:#FFF;
   text-align:center;
 }
-#rw_vidyas_video_n{
+#rm_videos_video_n{
   padding:30px;
 	padding-top:56.25%!important;
 	position:relative;
 }
-#rw_vidyas_video_n_text{
+#rm_videos_video_n_text{
 	position: absolute;
 	top: 0;
 	left: 0;
 	bottom: 0;
 	right: 0;
 }
-#rw_vidya_info{
+#rm_video_info{
 	margin-top:25px;
 }
 /* Stripe form css Variables */

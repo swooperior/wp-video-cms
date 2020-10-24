@@ -1,6 +1,6 @@
 <?php
 add_action( 'rest_api_init', function () {
-    register_rest_route( 'rw_vidyas/v1', '/endpoint', array(
+    register_rest_route( 'rm_videos/v1', '/endpoint', array(
       'methods'  => 'POST',
       'callback' => 'handle_vidya_payment',
     ) );
@@ -31,24 +31,24 @@ function handle_vidya_payment(){
             $paymentIntent = $event->data->object; 
             //Get video and user information from stripe payment
             $customer = $paymentIntent['metadata']['customer'];
-            $rw_vidya = $paymentIntent['metadata']['rw_vidya'];
-            $rw_vidya_id = str_replace('rw_vidya_','',$rw_vidya);
+            $rm_video = $paymentIntent['metadata']['rm_video'];
+            $rm_video_id = str_replace('rm_video_','',$rm_video);
             $s_payment_intent = $paymentIntent['id'];
 
             //Assign video to user
             $user = new WP_User($customer);
-            $user->add_cap($rw_vidya,true);
+            $user->add_cap($rm_video,true);
 
             //Send the user a receipt.
             $email_to = $user->user_email;
             $email_subject = "Receipt from ".get_site_url();
-            $email_body = rw_vidya_receipt_email($customer,$rw_vidya);
+            $email_body = rm_video_receipt_email($customer,$rm_video);
             $email_headers[] = 'Content-Type: text/html; charset=UTF-8';
             $email_headers[] = 'From: '.get_bloginfo('name').' <'.get_option('admin_email').'>'; //Currently from administrators email address.
             wp_mail($email_to,$email_subject,$email_body,$email_headers);
 
             //Add payment to database
-            rw_vidyas_db_insert($customer,$rw_vidya_id,$s_payment_intent);
+            rm_videos_db_insert($customer,$rm_video_id,$s_payment_intent);
 
             break;
         case 'payment_intent.payment_failed':
@@ -58,17 +58,17 @@ function handle_vidya_payment(){
             $paymentIntent = $event->data->object; 
             //Get video and user information from stripe payment
             $customer = $paymentIntent['metadata']['customer'];
-            $rw_vidya = $paymentIntent['metadata']['rw_vidya'];
+            $rm_video = $paymentIntent['metadata']['rm_video'];
             $s_payment_intent = $paymentIntent['id'];
             
             //Remove video from user
             $user = new WP_User($customer);
-            $user->remove_cap($rw_vidya,true);
+            $user->remove_cap($rm_video,true);
 
             //Send the user a refund confirmation
             $email_to = $user->user_email;
             $email_subject = "Refund from ".get_site_url();
-            $email_body = rw_vidya_refund_email($customer,$rw_vidya);
+            $email_body = rm_video_refund_email($customer,$rm_video);
             $email_headers[] = 'Content-Type: text/html; charset=UTF-8';
             $email_headers[] = 'From: '.get_bloginfo('name').' <'.get_option('admin_email').'>'; //Currently from administrators email address.
             wp_mail($email_to,$email_subject,$email_body,$email_headers);

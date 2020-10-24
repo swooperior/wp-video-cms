@@ -1,21 +1,21 @@
 <?php
 /*
-rw_vidyas database helper functions.
+rm_videos database helper functions.
 
 Author: Reece Mathieson
 
 */
 
 
-global $rw_vidyas_db_version;
+global $rm_videos_db_version;
 //Update version when database schema is changed.
-$rw_vidyas_db_version = 1.0;
+$rm_videos_db_version = 1.0;
 
 //Create the database table
-function rw_vidyas_db_install () {
+function rm_videos_db_install () {
     global $wpdb;
  
-    $table_name = $wpdb->prefix . "rw_vidyas_purchases"; 
+    $table_name = $wpdb->prefix . "rm_videos_purchases"; 
 
     $charset_collate = $wpdb->get_charset_collate();
 
@@ -30,16 +30,16 @@ function rw_vidyas_db_install () {
 
     require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
     dbDelta( $sql );
-    add_option( 'rw_vidyas_db_version', $rw_vidyas_db_version );
+    add_option( 'rm_videos_db_version', $rm_videos_db_version );
 
  }
 
  
 
  //Insert a new purchase into the database
- function rw_vidyas_db_insert($customer_id,$vidya_id,$s_payment_intent){
+ function rm_videos_db_insert($customer_id,$vidya_id,$s_payment_intent){
     global $wpdb;
-    $table_name = $wpdb->prefix . "rw_vidyas_purchases"; 
+    $table_name = $wpdb->prefix . "rm_videos_purchases"; 
 
     $wpdb->insert( 
         $table_name, 
@@ -55,13 +55,13 @@ function rw_vidyas_db_install () {
 
  function list_vidya_purchases() {
     global $wpdb;
-    $table_name = $wpdb->prefix . "rw_vidyas_purchases"; 
+    $table_name = $wpdb->prefix . "rm_videos_purchases"; 
     require_once('vendor/autoload.php');
     $stripeSK = get_option('rwvidyas_stripe_sk');
     \Stripe\Stripe::setApiKey($stripeSK);
 
     $purchases = $wpdb->get_results("SELECT * FROM $table_name ORDER BY id DESC");
-    $output = "<table id='rw_vidya_purchases'><tr><th>Customer</th><th>Video</th><th>Price</th><th>Status</th><th>Action</th></tr>";
+    $output = "<table id='rm_video_purchases'><tr><th>Customer</th><th>Video</th><th>Price</th><th>Status</th><th>Action</th></tr>";
 
     foreach($purchases as $purchase){
         $customer = get_userdata($purchase->customer_id);

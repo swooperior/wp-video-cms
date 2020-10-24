@@ -1,5 +1,5 @@
 <?php
-function rw_vidyas_load_scripts() {
+function rm_videos_load_scripts() {
  
 	wp_register_script( 'stripe-elements','https://js.stripe.com/v3/');
 	wp_register_script('stripe-client', plugins_url('client.js', __FILE__), array('jquery'),'1.1', true);
@@ -7,22 +7,22 @@ function rw_vidyas_load_scripts() {
 	wp_enqueue_script('stripe-elements');
 	wp_enqueue_script('stripe-client');
 }
-add_action( 'wp_enqueue_scripts', 'rw_vidyas_load_scripts' );  
+add_action( 'wp_enqueue_scripts', 'rm_videos_load_scripts' );  
 
 
-add_shortcode("rw_vidya","rw_vidyas_show_video");
+add_shortcode("rm_video","rm_videos_show_video");
 
-function rw_vidyas_show_video(){
+function rm_videos_show_video(){
 	$customer = get_current_user_id();
 	$customer_data = get_userdata($customer);
 	$customer_email = $customer_data->user_email;
     $desc = get_the_excerpt();
     $price = get_post_meta(get_the_ID(),"price_meta", true);
 	$vimeoID = get_post_meta(get_the_ID(),"vimeo_url",true);
-	$vidya_perm = "rw_vidya_".get_the_ID();
+	$vidya_perm = "rm_video_".get_the_ID();
     //Add some kind of check to see if the current logged in user has permissions to view the current video, if not give them the option to purchase it.
     if (current_user_can($vidya_perm) OR current_user_can('administrator')) {
-		$output .="<div class='rw_vidyas_video'>
+		$output .="<div class='rm_videos_video'>
 		 <iframe src='https://player.vimeo.com/video/".$vimeoID."' width='640' height='360' frameborder='0' allow='autoplay; fullscreen' allowfullscreen></iframe>
 		</div>";
 	}else{
@@ -39,7 +39,7 @@ function rw_vidyas_show_video(){
 			$intent = \Stripe\PaymentIntent::create([
 				'amount' => $newval,
 				'currency' => 'gbp',
-				'metadata' => ['rw_vidya' => $vidya_perm,'customer' => $customer],
+				'metadata' => ['rm_video' => $vidya_perm,'customer' => $customer],
 				'receipt_email' => $customer_email,
 			]);
 
@@ -48,7 +48,7 @@ function rw_vidyas_show_video(){
 
 			//if user is logged in but not purchased video
 			$output .="
-			<div class='rw_vidyas_video' id='rw_vidyas_video_n'><div id='rw_vidyas_video_n_text'>
+			<div class='rm_videos_video' id='rm_videos_video_n'><div id='rm_videos_video_n_text'>
 			<p>
 				You need to purchase this video in order to view it!
 			</p>
@@ -82,7 +82,7 @@ function rw_vidyas_show_video(){
 			</div>";
 		}else{
 			$output .="
-			<div class='rw_vidyas_video' id='rw_vidyas_video_n'><div id='rw_vidyas_video_n_text'>
+			<div class='rm_videos_video' id='rm_videos_video_n'><div id='rm_videos_video_n_text'>
 			<p>
 				You need to purchase this video in order to view it!
 			</p>
@@ -94,7 +94,7 @@ function rw_vidyas_show_video(){
 		
 	}
     
-    $output .="<div id='rw_vidya_info'>
+    $output .="<div id='rm_video_info'>
 		<p>$desc</p>
 	</div>";
 	

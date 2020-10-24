@@ -1,7 +1,7 @@
 <?
 //Edit admin list layout to include custom fields on custom post type
-add_action("manage_rw_vidyas_posts_custom_column",  "rwvidyas_custom_columns");
-add_filter("manage_edit-rw_vidyas_columns", "rwvidyas_edit_columns");
+add_action("manage_rm_videos_posts_custom_column",  "rwvidyas_custom_columns");
+add_filter("manage_edit-rm_videos_columns", "rwvidyas_edit_columns");
 
 function rwvidyas_edit_columns($columns){
   $columns = array(
@@ -44,14 +44,14 @@ function rwvidyas_register_settings() {
 add_action( 'admin_init', 'rwvidyas_register_settings' );
 
 function rwvidyas_register_options_page() {
-  add_options_page('RW Vidyas Settings', 'RW Vidyas Settings', 'manage_options', 'rw_vidya', 'rwvidyas_options_page');
+  add_options_page('RW Vidyas Settings', 'RW Vidyas Settings', 'manage_options', 'rm_video', 'rwvidyas_options_page');
 
   add_submenu_page(
-    'edit.php?post_type=rw_vidyas',
-    __( 'Video Purchases', 'rw_vidya' ),
-    __( 'Video Purchases', 'rw_vidya' ),
+    'edit.php?post_type=rm_videos',
+    __( 'Video Purchases', 'rm_video' ),
+    __( 'Video Purchases', 'rm_video' ),
     'manage_options',
-    'rw_vidya',
+    'rm_video',
     'rwvidyas_purchases_page'
 );
 }
@@ -102,7 +102,7 @@ add_action('update_option_rwvidyas_stripe_sk','rwvidyas_create_webhook_endpoint'
 function rwvidyas_create_webhook_endpoint(){
   require_once('vendor/autoload.php');
   $stripeSK = get_option('rwvidyas_stripe_sk');
-  $endpointURL =  get_site_url()."/wp-json/rw_vidyas/v1/endpoint";
+  $endpointURL =  get_site_url()."/wp-json/rm_videos/v1/endpoint";
   if($stripeSK != ""){
     \Stripe\Stripe::setApiKey($stripeSK);
     \Stripe\WebhookEndpoint::create([
