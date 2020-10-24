@@ -22,7 +22,6 @@ jobs:
       uses: actions/cache@v2
       with:
         path: vendor
-        fetch-depth: 2
         key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
         restore-keys: |
           ${{ runner.os }}-php-
@@ -30,12 +29,19 @@ jobs:
     - name: Install dependencies
       if: steps.composer-cache.outputs.cache-hit != 'true'
       run: composer install --prefer-dist --no-progress --no-suggest
-
+    
+  FTP-Deploy-Action:
+    name: FTP-Deploy-Action
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2.1.0
+      with:
+        fetch-depth: 2
     - name: FTP-Deploy-Action
       uses: SamKirkland/FTP-Deploy-Action@3.1.1
       with:
-        ftp-server: ftp.reecemathieson.dev
-        ftp-username: devapp@reecemathieson.dev
+        ftp-server: ftp://ftp.samkirkland.com/
+        ftp-username: myFtpUserName
         ftp-password: ${{ secrets.FTP_PASSWORD }}
       
     #  Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
