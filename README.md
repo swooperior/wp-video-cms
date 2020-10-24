@@ -1,0 +1,1 @@
+![Build and Deploy](https://github.com/swooperior/wp-video-cms/workflows/PHP%20Composer/badge.svg)
