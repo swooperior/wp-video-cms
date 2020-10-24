@@ -22,6 +22,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: vendor
+        fetch-depth: 2
         key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
         restore-keys: |
           ${{ runner.os }}-php-
@@ -30,6 +31,13 @@ jobs:
       if: steps.composer-cache.outputs.cache-hit != 'true'
       run: composer install --prefer-dist --no-progress --no-suggest
 
+    - name: FTP-Deploy-Action
+      uses: SamKirkland/FTP-Deploy-Action@3.1.1
+      with:
+        ftp-server: ftp://ftp.reecemathieson.dev/
+        ftp-username: devapp
+        ftp-password: xeRxpB4sbDgijsZ
+      
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
 
