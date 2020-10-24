@@ -1,4 +1,8 @@
 {
+    "name": "swooperior/wp-video-cms",
+    "description": "Sell vimeo videos with stripe.",
+    "version":"0.1.0",
+
     "require": {
         "vimeo/vimeo-api": "^3.0",
         "stripe/stripe-php": "^7.27"
